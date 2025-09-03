@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinoraTracker", "FinoraTracker.csproj", "{02CF63F9-537C-4C90-8BAA-6E6E5F80A8F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{02CF63F9-537C-4C90-8BAA-6E6E5F80A8F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02CF63F9-537C-4C90-8BAA-6E6E5F80A8F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02CF63F9-537C-4C90-8BAA-6E6E5F80A8F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02CF63F9-537C-4C90-8BAA-6E6E5F80A8F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6C03482-FF73-4D16-BD04-F1A76B3EEBCC}
+	EndGlobalSection
+EndGlobal
