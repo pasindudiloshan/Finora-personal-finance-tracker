@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FinoraTracker.Utills
 {
-    internal class validations
+    internal class Validations
     {
     }
 }

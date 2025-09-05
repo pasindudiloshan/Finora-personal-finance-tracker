@@ -2,7 +2,6 @@ C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.cspr
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\Interop.Accessibility.dll
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.csproj.ResolveComReference.cache
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.csproj.GenerateResource.cache
-C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.AssemblyInfoInputs.cache
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.AssemblyInfo.cs
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.csproj.CoreCompileInputs.cache
@@ -35,3 +34,9 @@ C:\Users\Hp\Desktop\FinoraTracker\bin\Debug\net9.0-windows7.0\runtimes\win-x64\n
 C:\Users\Hp\Desktop\FinoraTracker\bin\Debug\net9.0-windows7.0\runtimes\win-x64\native\krb5_64.dll
 C:\Users\Hp\Desktop\FinoraTracker\bin\Debug\net9.0-windows7.0\runtimes\win-x64\native\krbcc64.dll
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Dashboard.resources
+C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Addexpenses.resources
+C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Addincome.resources
+C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Expenses.resources
+C:\Users\Hp\Desktop\FinoraTracker\bin\Debug\net9.0-windows7.0\BCrypt.Net-Next.dll
+C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.IncomeForm.resources
