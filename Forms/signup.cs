@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FinoraTracker.Models;       // for User
 using FinoraTracker.Controllers;  // for UserController
-using FinoraTracker.DAOs;          // for UserDAO if needed
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FinoraTracker.Forms
 {
@@ -23,7 +21,7 @@ namespace FinoraTracker.Forms
 
         private void label10_Click(object sender, EventArgs e)
         {
-
+            // optional: info/help click
         }
 
         private void textBox4_Enter(object sender, EventArgs e)
@@ -46,6 +44,7 @@ namespace FinoraTracker.Forms
             {
                 textBox3.Text = "";
                 textBox3.ForeColor = Color.SeaGreen;
+                textBox3.UseSystemPasswordChar = true; // hide password
             }
 
             textBox3.BackColor = Color.White;
@@ -56,10 +55,8 @@ namespace FinoraTracker.Forms
 
         private void label8_Click(object sender, EventArgs e)
         {
-            // Hide Signin form
+            // Hide Signup form and open Signin
             this.Hide();
-
-            // Open Signin form
             Signin signinForm = new Signin();
             signinForm.Show();
         }
@@ -83,7 +80,8 @@ namespace FinoraTracker.Forms
             if (textBox3.Text == "")
             {
                 textBox3.Text = "Enter Password";
-                textBox3.ForeColor = Color.SeaGreen;
+                textBox3.ForeColor = Color.Silver;
+                textBox3.UseSystemPasswordChar = false; // reset masking for placeholder
             }
         }
 
@@ -92,27 +90,34 @@ namespace FinoraTracker.Forms
             string emailInput = textBox4.Text.Trim();
             string passwordInput = textBox3.Text.Trim();
 
-            if (string.IsNullOrEmpty(emailInput) || string.IsNullOrEmpty(passwordInput))
+            if (string.IsNullOrEmpty(emailInput) || string.IsNullOrEmpty(passwordInput) ||
+                emailInput == "Enter Email" || passwordInput == "Enter Password")
             {
-                MessageBox.Show("Enter both email and password.");
+                MessageBox.Show("⚠️ Please enter both email and password.",
+                                "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            UserController controller = new UserController();
-            User? loggedInUser = controller.Login(emailInput, passwordInput);
+            try
+            {
+                UserController controller = new UserController();
+                User? loggedInUser = controller.Login(emailInput, passwordInput);
 
-            if (loggedInUser != null)
-            {
-                MessageBox.Show($"Welcome, {loggedInUser.FullName}!");
-                this.Hide();
-                Dashboard dashboard = new Dashboard(loggedInUser);
-                dashboard.Show();
+                if (loggedInUser != null)
+                {
+                    MessageBox.Show($"🎉 Welcome, {loggedInUser.FullName}!",
+                                    "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Hide();
+                    Dashboard dashboard = new Dashboard(loggedInUser);
+                    dashboard.Show();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Invalid email or password.");
+                MessageBox.Show("❌ " + ex.Message,
+                                "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }

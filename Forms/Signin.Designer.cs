@@ -204,7 +204,6 @@
             howknow.Name = "howknow";
             howknow.Size = new Size(349, 67);
             howknow.TabIndex = 32;
-            howknow.TextChanged += howknow_TextChanged;
             // 
             // password
             // 
@@ -217,7 +216,6 @@
             password.Name = "password";
             password.Size = new Size(222, 40);
             password.TabIndex = 31;
-            password.TextChanged += password_TextChanged;
             // 
             // label14
             // 
@@ -240,7 +238,6 @@
             investmentcombo.Name = "investmentcombo";
             investmentcombo.Size = new Size(222, 38);
             investmentcombo.TabIndex = 28;
-            investmentcombo.SelectedIndexChanged += investmentcombo_SelectedIndexChanged;
             // 
             // label13
             // 
@@ -313,7 +310,6 @@
             lname.Name = "lname";
             lname.Size = new Size(248, 40);
             lname.TabIndex = 22;
-            lname.TextChanged += lname_TextChanged;
             // 
             // label8
             // 
@@ -348,7 +344,6 @@
             incomecombo.Name = "incomecombo";
             incomecombo.Size = new Size(181, 38);
             incomecombo.TabIndex = 16;
-            incomecombo.SelectedIndexChanged += incomecombo_SelectedIndexChanged;
             // 
             // occupation
             // 
@@ -361,7 +356,6 @@
             occupation.Name = "occupation";
             occupation.Size = new Size(248, 40);
             occupation.TabIndex = 15;
-            occupation.TextChanged += occupation_TextChanged;
             // 
             // female
             // 
@@ -373,7 +367,6 @@
             female.TabStop = true;
             female.Text = "Female";
             female.UseVisualStyleBackColor = true;
-            female.CheckedChanged += female_CheckedChanged;
             // 
             // male
             // 
@@ -385,7 +378,6 @@
             male.TabStop = true;
             male.Text = "Male";
             male.UseVisualStyleBackColor = true;
-            male.CheckedChanged += male_CheckedChanged;
             // 
             // email
             // 
@@ -398,7 +390,6 @@
             email.Name = "email";
             email.Size = new Size(248, 40);
             email.TabIndex = 12;
-            email.TextChanged += email_TextChanged;
             // 
             // pnumber
             // 
@@ -411,7 +402,6 @@
             pnumber.Name = "pnumber";
             pnumber.Size = new Size(221, 40);
             pnumber.TabIndex = 11;
-            pnumber.TextChanged += pnumber_TextChanged;
             // 
             // fname
             // 
@@ -424,7 +414,6 @@
             fname.Name = "fname";
             fname.Size = new Size(221, 43);
             fname.TabIndex = 4;
-            fname.TextChanged += fname_TextChanged;
             // 
             // label7
             // 

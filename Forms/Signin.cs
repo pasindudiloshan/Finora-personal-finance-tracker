@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FinoraTracker.Models;       // for User
 using FinoraTracker.Controllers;  // for UserController
-using FinoraTracker.DAOs;          // for UserDAO if needed
 
 namespace FinoraTracker.Forms
 {
@@ -22,7 +21,7 @@ namespace FinoraTracker.Forms
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
+            // optional: logo click action
         }
 
         private void closebtn_Click(object sender, EventArgs e)
@@ -32,10 +31,8 @@ namespace FinoraTracker.Forms
 
         private void label7_Click(object sender, EventArgs e)
         {
-            // Hide Signin form
+            // Hide Signin form and show Signup
             this.Hide();
-
-            // Open Signup form
             Signup signupForm = new Signup();
             signupForm.Show();
         }
@@ -47,70 +44,17 @@ namespace FinoraTracker.Forms
             label7.Font = new Font(label7.Font, FontStyle.Underline);
         }
 
-        private void fname_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lname_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pnumber_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void email_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void male_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void female_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void occupation_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void incomecombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void investmentcombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void howknow_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void password_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void registerbtn_Click(object sender, EventArgs e)
         {
             try
             {
+                // Collect input values
                 string fullName = fname.Text.Trim() + " " + lname.Text.Trim();
                 string gender = male.Checked ? "Male" : female.Checked ? "Female" : string.Empty;
                 string incomeFrequency = incomecombo.SelectedItem?.ToString() ?? string.Empty;
                 string investmentInterest = investmentcombo.SelectedItem?.ToString() ?? string.Empty;
 
+                // Create user model
                 User newUser = new User
                 {
                     FullName = fullName,
@@ -121,29 +65,30 @@ namespace FinoraTracker.Forms
                     IncomeFrequency = incomeFrequency,
                     InvestmentInterest = investmentInterest,
                     HowDidYouKnow = howknow.Text.Trim(),
-                    Password = password.Text.Trim()
+                    Password = password.Text.Trim()  // will be hashed in DAO
                 };
 
+                // Call controller
                 UserController controller = new UserController();
                 bool success = controller.Register(newUser);
 
                 if (success)
                 {
-                    MessageBox.Show("Registration successful!");
+                    MessageBox.Show("🎉 Registration successful! Please log in now.",
+                                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Open login form
                     this.Hide();
                     Signin signinForm = new Signin();
                     signinForm.Show();
                 }
-                else
-                {
-                    MessageBox.Show("Registration failed!");
-                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                // All validation & duplicate email errors come here
+                MessageBox.Show("❌ " + ex.Message,
+                                "Registration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }
