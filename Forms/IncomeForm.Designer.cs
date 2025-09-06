@@ -161,6 +161,7 @@
             reportbtn.TabIndex = 16;
             reportbtn.Text = "Reports";
             reportbtn.UseVisualStyleBackColor = true;
+            reportbtn.Click += reportbtn_Click;
             // 
             // pictureBox13
             // 
@@ -398,6 +399,7 @@
             // 
             dataGridexpens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridexpens.Location = new Point(337, 232);
+            dataGridexpens.Margin = new Padding(0);
             dataGridexpens.Name = "dataGridexpens";
             dataGridexpens.RowHeadersWidth = 62;
             dataGridexpens.Size = new Size(1000, 467);

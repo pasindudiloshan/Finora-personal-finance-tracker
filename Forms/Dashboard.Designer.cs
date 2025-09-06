@@ -801,6 +801,7 @@
             reportbtn.TabIndex = 16;
             reportbtn.Text = "Reports";
             reportbtn.UseVisualStyleBackColor = true;
+            reportbtn.Click += reportbtn_Click;
             // 
             // pictureBox13
             // 

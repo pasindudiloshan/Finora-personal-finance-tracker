@@ -1,6 +1,6 @@
 ﻿namespace FinoraTracker.Forms
 {
-    partial class Addexpenses
+    partial class Reports
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Addexpenses));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reports));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel1 = new Panel();
             pictureBox16 = new PictureBox();
             pictureBox15 = new PictureBox();
@@ -55,19 +64,25 @@
             label7 = new Label();
             pictureBox2 = new PictureBox();
             label1 = new Label();
-            backbtn = new Button();
-            descrption1 = new RichTextBox();
-            addexpensesbtn = new Button();
-            categorycombo2 = new ComboBox();
-            paymentcombo = new ComboBox();
+            chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            panel4 = new Panel();
+            textBox2 = new TextBox();
+            textBox1 = new TextBox();
+            dataGridView1 = new DataGridView();
+            chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            pictureBox3 = new PictureBox();
+            pictureBox4 = new PictureBox();
+            pictureBox5 = new PictureBox();
+            dateTimePicker1 = new DateTimePicker();
             dateTimePicker2 = new DateTimePicker();
-            amountbox1 = new NumericUpDown();
-            label10 = new Label();
-            label12 = new Label();
-            label5 = new Label();
-            label9 = new Label();
+            button1 = new Button();
             label4 = new Label();
+            label5 = new Label();
             label6 = new Label();
+            dateTimePicker3 = new DateTimePicker();
+            dataGridView2 = new DataGridView();
+            pictureBox6 = new PictureBox();
+            chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
@@ -82,7 +97,16 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)amountbox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chart1).BeginInit();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chart3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chart2).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -167,6 +191,7 @@
             reportbtn.TabIndex = 16;
             reportbtn.Text = "Reports";
             reportbtn.UseVisualStyleBackColor = true;
+            reportbtn.Click += reportbtn_Click;
             // 
             // pictureBox13
             // 
@@ -215,6 +240,7 @@
             expensesbtn.TabIndex = 12;
             expensesbtn.Text = "   Expenses";
             expensesbtn.UseVisualStyleBackColor = true;
+            expensesbtn.Click += expensesbtn_Click;
             // 
             // pictureBox11
             // 
@@ -239,6 +265,7 @@
             incomebtn.TabIndex = 10;
             incomebtn.Text = "Income";
             incomebtn.UseVisualStyleBackColor = true;
+            incomebtn.Click += incomebtn_Click;
             // 
             // pictureBox10
             // 
@@ -308,6 +335,7 @@
             dashboardbtn.TabIndex = 8;
             dashboardbtn.Text = "     Dashboard";
             dashboardbtn.UseVisualStyleBackColor = true;
+            dashboardbtn.Click += dashboardbtn_Click;
             // 
             // logoutbtn
             // 
@@ -335,7 +363,7 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(300, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1044, 79);
+            panel2.Size = new Size(1066, 79);
             panel2.TabIndex = 8;
             // 
             // pictureBox9
@@ -394,172 +422,231 @@
             label1.Font = new Font("Century Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(18, 25);
             label1.Name = "label1";
-            label1.Size = new Size(206, 34);
+            label1.Size = new Size(114, 34);
             label1.TabIndex = 3;
-            label1.Text = "Add Expenses";
+            label1.Text = "Reports";
             // 
-            // backbtn
+            // chart1
             // 
-            backbtn.BackColor = SystemColors.Highlight;
-            backbtn.FlatStyle = FlatStyle.Flat;
-            backbtn.Font = new Font("Sitka Text", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            backbtn.ForeColor = Color.White;
-            backbtn.Location = new Point(333, 667);
-            backbtn.Name = "backbtn";
-            backbtn.Size = new Size(151, 41);
-            backbtn.TabIndex = 61;
-            backbtn.Text = "🡸 Back";
-            backbtn.UseVisualStyleBackColor = false;
+            chartArea1.Name = "ChartArea1";
+            chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chart1.Legends.Add(legend1);
+            chart1.Location = new Point(631, 510);
+            chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 2;
+            chart1.Series.Add(series1);
+            chart1.Size = new Size(723, 198);
+            chart1.TabIndex = 9;
+            chart1.Text = "chart1";
             // 
-            // descrption1
+            // panel4
             // 
-            descrption1.Location = new Point(985, 238);
-            descrption1.Name = "descrption1";
-            descrption1.Size = new Size(347, 124);
-            descrption1.TabIndex = 60;
-            descrption1.Text = "";
+            panel4.Controls.Add(textBox2);
+            panel4.Controls.Add(textBox1);
+            panel4.Location = new Point(318, 566);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(300, 141);
+            panel4.TabIndex = 11;
             // 
-            // addexpensesbtn
+            // textBox2
             // 
-            addexpensesbtn.BackColor = Color.SeaGreen;
-            addexpensesbtn.FlatStyle = FlatStyle.Flat;
-            addexpensesbtn.Font = new Font("Sitka Text", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addexpensesbtn.ForeColor = Color.White;
-            addexpensesbtn.Location = new Point(755, 473);
-            addexpensesbtn.Name = "addexpensesbtn";
-            addexpensesbtn.Size = new Size(224, 57);
-            addexpensesbtn.TabIndex = 59;
-            addexpensesbtn.Text = "Add Expense";
-            addexpensesbtn.UseVisualStyleBackColor = false;
-            addexpensesbtn.Click += addexpensesbtn_Click;
+            textBox2.Location = new Point(152, 18);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(136, 103);
+            textBox2.TabIndex = 13;
             // 
-            // categorycombo2
+            // textBox1
             // 
-            categorycombo2.FormattingEnabled = true;
-            categorycombo2.Items.AddRange(new object[] { "Salary", "Business Profits", "Freelance", "Investments", "Dividends", "Rental Income", "Gifts / Donations", "Bonus / Incentives" });
-            categorycombo2.Location = new Point(985, 133);
-            categorycombo2.Name = "categorycombo2";
-            categorycombo2.Size = new Size(347, 33);
-            categorycombo2.TabIndex = 58;
+            textBox1.Location = new Point(11, 18);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(136, 103);
+            textBox1.TabIndex = 12;
             // 
-            // paymentcombo
+            // dataGridView1
             // 
-            paymentcombo.FormattingEnabled = true;
-            paymentcombo.Items.AddRange(new object[] { "Sampath Bank", "People's Bank", "HNB Bank", "Commercial Bank", "Credit Card", "Cash" });
-            paymentcombo.Location = new Point(490, 329);
-            paymentcombo.Name = "paymentcombo";
-            paymentcombo.Size = new Size(347, 33);
-            paymentcombo.TabIndex = 57;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(636, 296);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 62;
+            dataGridView1.Size = new Size(712, 96);
+            dataGridView1.TabIndex = 12;
+            // 
+            // chart3
+            // 
+            chartArea2.Name = "ChartArea1";
+            chart3.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chart3.Legends.Add(legend2);
+            chart3.Location = new Point(318, 98);
+            chart3.Name = "chart3";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Doughnut;
+            series2.IsXValueIndexed = true;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            chart3.Series.Add(series2);
+            chart3.Size = new Size(300, 221);
+            chart3.TabIndex = 14;
+            chart3.Text = "chart3";
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Location = new Point(636, 210);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(161, 76);
+            pictureBox3.TabIndex = 15;
+            pictureBox3.TabStop = false;
+            // 
+            // pictureBox4
+            // 
+            pictureBox4.Location = new Point(820, 210);
+            pictureBox4.Name = "pictureBox4";
+            pictureBox4.Size = new Size(161, 76);
+            pictureBox4.TabIndex = 16;
+            pictureBox4.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            pictureBox5.Location = new Point(1002, 210);
+            pictureBox5.Name = "pictureBox5";
+            pictureBox5.Size = new Size(161, 76);
+            pictureBox5.TabIndex = 17;
+            pictureBox5.TabStop = false;
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(631, 106);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(282, 31);
+            dateTimePicker1.TabIndex = 19;
             // 
             // dateTimePicker2
             // 
-            dateTimePicker2.Location = new Point(490, 241);
+            dateTimePicker2.Location = new Point(1721, 25);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(347, 31);
-            dateTimePicker2.TabIndex = 56;
+            dateTimePicker2.Size = new Size(282, 31);
+            dateTimePicker2.TabIndex = 20;
             // 
-            // amountbox1
+            // button1
             // 
-            amountbox1.Location = new Point(490, 138);
-            amountbox1.Name = "amountbox1";
-            amountbox1.Size = new Size(347, 31);
-            amountbox1.TabIndex = 55;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.BackColor = Color.Transparent;
-            label10.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label10.ForeColor = Color.SeaGreen;
-            label10.Location = new Point(333, 334);
-            label10.Name = "label10";
-            label10.Size = new Size(150, 23);
-            label10.TabIndex = 54;
-            label10.Text = "Payment Method:";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.BackColor = Color.Transparent;
-            label12.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label12.ForeColor = Color.SeaGreen;
-            label12.Location = new Point(874, 334);
-            label12.Name = "label12";
-            label12.Size = new Size(0, 23);
-            label12.TabIndex = 53;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.Transparent;
-            label5.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label5.ForeColor = Color.SeaGreen;
-            label5.Location = new Point(333, 242);
-            label5.Name = "label5";
-            label5.Size = new Size(53, 23);
-            label5.TabIndex = 52;
-            label5.Text = "Date:";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.Transparent;
-            label9.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label9.ForeColor = Color.SeaGreen;
-            label9.Location = new Point(870, 241);
-            label9.Name = "label9";
-            label9.Size = new Size(109, 23);
-            label9.TabIndex = 51;
-            label9.Text = "Description:";
+            button1.Location = new Point(1236, 106);
+            button1.Name = "button1";
+            button1.Size = new Size(112, 34);
+            button1.TabIndex = 21;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label4.ForeColor = Color.SeaGreen;
-            label4.Location = new Point(870, 137);
+            label4.BackColor = Color.White;
+            label4.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(924, 164);
             label4.Name = "label4";
-            label4.Size = new Size(86, 23);
-            label4.TabIndex = 50;
-            label4.Text = "Category:";
+            label4.Size = new Size(274, 23);
+            label4.TabIndex = 9;
+            label4.Text = " during the selected period";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.White;
+            label5.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(638, 164);
+            label5.Name = "label5";
+            label5.Size = new Size(158, 23);
+            label5.TabIndex = 22;
+            label5.Text = " Net worth gain";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.BackColor = Color.Transparent;
-            label6.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label6.ForeColor = Color.SeaGreen;
-            label6.Location = new Point(333, 138);
+            label6.BackColor = Color.Green;
+            label6.Font = new Font("Century Gothic", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(796, 157);
             label6.Name = "label6";
-            label6.Size = new Size(130, 23);
-            label6.TabIndex = 49;
-            label6.Text = "Amount (LKR):";
+            label6.Size = new Size(133, 38);
+            label6.TabIndex = 23;
+            label6.Text = "100 LKR";
             // 
-            // Addexpenses
+            // dateTimePicker3
+            // 
+            dateTimePicker3.Location = new Point(934, 106);
+            dateTimePicker3.Name = "dateTimePicker3";
+            dateTimePicker3.Size = new Size(282, 31);
+            dateTimePicker3.TabIndex = 24;
+            // 
+            // dataGridView2
+            // 
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Location = new Point(636, 398);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersWidth = 62;
+            dataGridView2.Size = new Size(712, 96);
+            dataGridView2.TabIndex = 25;
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Location = new Point(1187, 210);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(161, 76);
+            pictureBox6.TabIndex = 18;
+            pictureBox6.TabStop = false;
+            // 
+            // chart2
+            // 
+            chartArea3.Name = "ChartArea1";
+            chart2.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            chart2.Legends.Add(legend3);
+            chart2.Location = new Point(318, 339);
+            chart2.Name = "chart2";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series3.IsXValueIndexed = true;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            chart2.Series.Add(series3);
+            chart2.Size = new Size(300, 221);
+            chart2.TabIndex = 26;
+            chart2.Text = "chart2";
+            // 
+            // Reports
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1344, 720);
-            Controls.Add(backbtn);
-            Controls.Add(descrption1);
-            Controls.Add(addexpensesbtn);
-            Controls.Add(categorycombo2);
-            Controls.Add(paymentcombo);
-            Controls.Add(dateTimePicker2);
-            Controls.Add(amountbox1);
-            Controls.Add(label10);
-            Controls.Add(label12);
-            Controls.Add(label5);
-            Controls.Add(label9);
-            Controls.Add(label4);
+            ClientSize = new Size(1366, 720);
+            Controls.Add(chart2);
+            Controls.Add(dataGridView2);
+            Controls.Add(dateTimePicker3);
             Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(chart1);
+            Controls.Add(button1);
+            Controls.Add(dateTimePicker2);
+            Controls.Add(dateTimePicker1);
+            Controls.Add(pictureBox6);
+            Controls.Add(pictureBox5);
+            Controls.Add(pictureBox4);
+            Controls.Add(pictureBox3);
+            Controls.Add(chart3);
+            Controls.Add(dataGridView1);
+            Controls.Add(panel4);
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Addexpenses";
+            Name = "Reports";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Addexpenses";
+            Text = "reports";
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox16).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
@@ -576,7 +663,17 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)amountbox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chart1).EndInit();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chart3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chart2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -609,18 +706,24 @@
         private Label label7;
         private PictureBox pictureBox2;
         private Label label1;
-        private Button backbtn;
-        private RichTextBox descrption1;
-        private Button addexpensesbtn;
-        private ComboBox categorycombo2;
-        private ComboBox paymentcombo;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private Panel panel4;
+        private TextBox textBox2;
+        private TextBox textBox1;
+        private DataGridView dataGridView1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
+        private PictureBox pictureBox3;
+        private PictureBox pictureBox4;
+        private PictureBox pictureBox5;
+        private DateTimePicker dateTimePicker1;
         private DateTimePicker dateTimePicker2;
-        private NumericUpDown amountbox1;
-        private Label label10;
-        private Label label12;
-        private Label label5;
-        private Label label9;
+        private Button button1;
         private Label label4;
+        private Label label5;
         private Label label6;
+        private DateTimePicker dateTimePicker3;
+        private DataGridView dataGridView2;
+        private PictureBox pictureBox6;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
     }
 }

@@ -379,6 +379,7 @@
             label7.Size = new Size(79, 19);
             label7.TabIndex = 5;
             label7.Text = "Hi! name";
+            label7.Click += label7_Click;
             // 
             // pictureBox2
             // 

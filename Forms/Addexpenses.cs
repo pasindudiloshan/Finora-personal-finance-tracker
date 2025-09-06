@@ -136,5 +136,10 @@ namespace FinoraTracker.Forms
         {
             // Optional: handle selection change if needed
         }
+
+        private void logoutbtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

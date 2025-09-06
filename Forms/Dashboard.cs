@@ -134,6 +134,9 @@ namespace FinoraTracker.Forms
                     Legend = "Legend1"
                 };
 
+                // Disable labels inside the pie chart
+                series2["PieLabelStyle"] = "Disabled";
+
                 foreach (var item in categoryGroups)
                     series2.Points.AddXY(item.Category, (double)item.Total);
 
@@ -223,7 +226,6 @@ namespace FinoraTracker.Forms
             SetChangeLabel(label15, netWorthChange);
         }
 
-
         // ---------------- Navigation ----------------
         private void logoutbtn_Click(object sender, EventArgs e) => Application.Exit();
 
@@ -245,6 +247,13 @@ namespace FinoraTracker.Forms
         {
             Expenses expenseForm = new Expenses(this.currentUser);
             expenseForm.Show();
+            this.Hide();
+        }
+
+        private void reportbtn_Click(object sender, EventArgs e)
+        {
+            Reports reportsForm = new Reports(currentUser);
+            reportsForm.Show();
             this.Hide();
         }
     }

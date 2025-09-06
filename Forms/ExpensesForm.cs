@@ -24,10 +24,11 @@ namespace FinoraTracker.Forms
 
             dataGridExpenses.AutoGenerateColumns = false;
             InitializeDataGridColumns();
+            CustomizeDataGrid();
             InitializeCategoryCombo();
 
             LoadUserExpenses();
-            UpdateExpenseSummary(); // Show last 30 days expense
+            UpdateExpenseSummary(); // Show last 30 days expenses
         }
 
         // -------------------- DataGrid Columns --------------------
@@ -39,46 +40,69 @@ namespace FinoraTracker.Forms
             {
                 HeaderText = "Amount",
                 DataPropertyName = "Amount",
-                Width = 100
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             });
             dataGridExpenses.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Category",
                 DataPropertyName = "Category",
-                Width = 120
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             });
             dataGridExpenses.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Date",
                 DataPropertyName = "ExpenseDate",
-                Width = 100,
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
                 DefaultCellStyle = { Format = "yyyy-MM-dd" }
             });
             dataGridExpenses.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Payment Method",
                 DataPropertyName = "PaymentMethod",
-                Width = 120
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
             });
             dataGridExpenses.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Description",
                 DataPropertyName = "Description",
-                Width = 200
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
-            dataGridExpenses.Columns.Add(new DataGridViewButtonColumn
+            // Edit icon column
+            DataGridViewImageColumn editColumn = new DataGridViewImageColumn
             {
                 HeaderText = "Edit",
-                Text = "Edit",
-                UseColumnTextForButtonValue = true
-            });
-            dataGridExpenses.Columns.Add(new DataGridViewButtonColumn
+                Image = Properties.Resources.edit_icon,
+                ImageLayout = DataGridViewImageCellLayout.Zoom,
+                Name = "Edit",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            };
+            dataGridExpenses.Columns.Add(editColumn);
+
+            // Delete icon column
+            DataGridViewImageColumn deleteColumn = new DataGridViewImageColumn
             {
                 HeaderText = "Delete",
-                Text = "Delete",
-                UseColumnTextForButtonValue = true
-            });
+                Image = Properties.Resources.delete_icon,
+                ImageLayout = DataGridViewImageCellLayout.Zoom,
+                Name = "Delete",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            };
+            dataGridExpenses.Columns.Add(deleteColumn);
+        }
+
+        // -------------------- UI Styling --------------------
+        private void CustomizeDataGrid()
+        {
+            dataGridExpenses.EnableHeadersVisualStyles = false;
+            dataGridExpenses.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.SeaGreen;
+            dataGridExpenses.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
+            dataGridExpenses.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Bold);
+
+            dataGridExpenses.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.LightGray;
+            dataGridExpenses.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9);
+            dataGridExpenses.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridExpenses.RowTemplate.Height = 35;
         }
 
         // -------------------- Populate Category ComboBox --------------------
@@ -118,7 +142,6 @@ namespace FinoraTracker.Forms
 
                 decimal totalLast30Days = last30DaysExpenses.Sum(e => e.Amount);
 
-                // Display exact amount with commas
                 textBox1.Text = $"Last 30 days expenses: {totalLast30Days:N0} LKR";
             }
             catch
@@ -133,13 +156,15 @@ namespace FinoraTracker.Forms
             if (e.RowIndex < 0) return;
             Expense selectedExpense = userExpenses[e.RowIndex];
 
-            if (dataGridExpenses.Columns[e.ColumnIndex].HeaderText == "Edit")
+            string columnName = dataGridExpenses.Columns[e.ColumnIndex].Name;
+
+            if (columnName == "Edit")
             {
                 Addexpenses editForm = new Addexpenses(currentUser, selectedExpense);
                 editForm.FormClosed += (s, args) => { LoadUserExpenses(); UpdateExpenseSummary(); };
                 editForm.Show();
             }
-            else if (dataGridExpenses.Columns[e.ColumnIndex].HeaderText == "Delete")
+            else if (columnName == "Delete")
             {
                 var confirm = MessageBox.Show("Are you sure you want to delete this expense?",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -213,6 +238,13 @@ namespace FinoraTracker.Forms
             {
                 MessageBox.Show("Search failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void reportbtn_Click(object sender, EventArgs e)
+        {
+            Reports reportsForm = new Reports(currentUser);
+            reportsForm.Show();
+            this.Hide();
         }
     }
 }
