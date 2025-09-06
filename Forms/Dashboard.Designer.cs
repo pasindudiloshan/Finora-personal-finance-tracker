@@ -329,7 +329,7 @@
             label5.AutoSize = true;
             label5.Font = new Font("Century Gothic", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.Highlight;
-            label5.Location = new Point(24, 13);
+            label5.Location = new Point(24, 3);
             label5.Name = "label5";
             label5.Size = new Size(242, 28);
             label5.TabIndex = 9;
@@ -342,7 +342,7 @@
             chart2.Dock = DockStyle.Bottom;
             legend2.Name = "Legend1";
             chart2.Legends.Add(legend2);
-            chart2.Location = new Point(0, 50);
+            chart2.Location = new Point(0, 34);
             chart2.Name = "chart2";
             chart2.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
             series2.ChartArea = "ChartArea1";
@@ -350,7 +350,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             chart2.Series.Add(series2);
-            chart2.Size = new Size(349, 298);
+            chart2.Size = new Size(349, 314);
             chart2.TabIndex = 0;
             chart2.Text = "chart2";
             // 
@@ -568,9 +568,9 @@
             label18.ForeColor = SystemColors.HotTrack;
             label18.Location = new Point(12, 84);
             label18.Name = "label18";
-            label18.Size = new Size(82, 19);
+            label18.Size = new Size(118, 19);
             label18.TabIndex = 10;
-            label18.Text = "Net Worth";
+            label18.Text = "Daily Incomes";
             // 
             // pictureBox6
             // 
@@ -637,9 +637,9 @@
             label21.ForeColor = SystemColors.HotTrack;
             label21.Location = new Point(12, 84);
             label21.Name = "label21";
-            label21.Size = new Size(82, 19);
+            label21.Size = new Size(122, 19);
             label21.TabIndex = 10;
-            label21.Text = "Net Worth";
+            label21.Text = "Daily Expenses";
             // 
             // pictureBox7
             // 
