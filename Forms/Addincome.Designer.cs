@@ -409,6 +409,7 @@
             label6.Size = new Size(130, 23);
             label6.TabIndex = 23;
             label6.Text = "Amount (LKR):";
+            label6.Click += label6_Click;
             // 
             // label4
             // 

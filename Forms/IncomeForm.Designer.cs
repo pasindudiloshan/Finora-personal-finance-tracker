@@ -55,12 +55,13 @@
             label7 = new Label();
             pictureBox2 = new PictureBox();
             label1 = new Label();
-            serchbox = new TextBox();
-            dataGridincome = new DataGridView();
+            dataGridexpens = new DataGridView();
             datebox = new DateTimePicker();
             label4 = new Label();
             addincomepage = new Button();
             searchbtn = new Button();
+            serchbox = new ComboBox();
+            textBox1 = new TextBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
@@ -75,7 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridincome).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridexpens).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -233,7 +234,6 @@
             incomebtn.TabIndex = 10;
             incomebtn.Text = "Income";
             incomebtn.UseVisualStyleBackColor = true;
-            incomebtn.Click += incomebtn_Click;
             // 
             // pictureBox10
             // 
@@ -394,21 +394,15 @@
             label1.TabIndex = 3;
             label1.Text = "Income Overview";
             // 
-            // serchbox
+            // dataGridexpens
             // 
-            serchbox.Location = new Point(337, 119);
-            serchbox.Name = "serchbox";
-            serchbox.Size = new Size(412, 31);
-            serchbox.TabIndex = 7;
-            // 
-            // dataGridincome
-            // 
-            dataGridincome.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridincome.Location = new Point(337, 232);
-            dataGridincome.Name = "dataGridincome";
-            dataGridincome.RowHeadersWidth = 62;
-            dataGridincome.Size = new Size(1000, 467);
-            dataGridincome.TabIndex = 11;
+            dataGridexpens.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridexpens.Location = new Point(337, 232);
+            dataGridexpens.Name = "dataGridexpens";
+            dataGridexpens.RowHeadersWidth = 62;
+            dataGridexpens.Size = new Size(1000, 467);
+            dataGridexpens.TabIndex = 11;
+            dataGridexpens.CellContentClick += dataGridincome_CellContentClick;
             // 
             // datebox
             // 
@@ -453,22 +447,46 @@
             searchbtn.TabIndex = 49;
             searchbtn.Text = "🔍 Search";
             searchbtn.UseVisualStyleBackColor = false;
+            searchbtn.Click += searchbtn_Click;
             // 
-            // Income
+            // serchbox
+            // 
+            serchbox.FormattingEnabled = true;
+            serchbox.Items.AddRange(new object[] { "Salary", "Business Profits", "Freelance", "Investment", "Dividends", "Rental Income", "Gifts / Donations", "Bonus / Incentives" });
+            serchbox.Location = new Point(337, 117);
+            serchbox.Name = "serchbox";
+            serchbox.Size = new Size(401, 33);
+            serchbox.TabIndex = 50;
+            // 
+            // textBox1
+            // 
+            textBox1.BackColor = SystemColors.Control;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            textBox1.ForeColor = Color.Green;
+            textBox1.Location = new Point(514, 186);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(595, 31);
+            textBox1.TabIndex = 51;
+            textBox1.Text = "+12,678 LKR";
+            // 
+            // IncomeForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1366, 720);
+            Controls.Add(textBox1);
+            Controls.Add(serchbox);
             Controls.Add(searchbtn);
             Controls.Add(addincomepage);
             Controls.Add(label4);
             Controls.Add(datebox);
-            Controls.Add(dataGridincome);
-            Controls.Add(serchbox);
+            Controls.Add(dataGridexpens);
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Income";
+            Name = "IncomeForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "income";
             panel1.ResumeLayout(false);
@@ -487,7 +505,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridincome).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridexpens).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -520,11 +538,12 @@
         private Label label7;
         private PictureBox pictureBox2;
         private Label label1;
-        private TextBox serchbox;
-        private DataGridView dataGridincome;
+        private DataGridView dataGridexpens;
         private DateTimePicker datebox;
         private Label label4;
         private Button addincomepage;
         private Button searchbtn;
+        private ComboBox serchbox;
+        private TextBox textBox1;
     }
 }

@@ -9,31 +9,64 @@ namespace FinoraTracker.Forms
     {
         private readonly User currentUser;
         private readonly IncomeController incomeController;
+        private readonly Income? existingIncome; // nullable for add/edit distinction
 
+        // Constructor for adding new income
         public Addincome(User user)
         {
             InitializeComponent();
             currentUser = user;
             incomeController = new IncomeController();
+            existingIncome = null;
 
-            // Display welcome message
+            InitializeForm();
+        }
+
+        // Constructor for editing existing income
+        public Addincome(User user, Income incomeToEdit)
+        {
+            InitializeComponent();
+            currentUser = user;
+            incomeController = new IncomeController();
+            existingIncome = incomeToEdit;
+
+            InitializeForm();
+
+            // Pre-fill fields with existing income
+            amountbox.Value = existingIncome.Amount;
+            categorycombo.SelectedItem = existingIncome.Category;
+            dateTimePicker1.Value = existingIncome.IncomeDate;
+            descrption.Text = existingIncome.Description;
+            soucrecombo.SelectedItem = existingIncome.AccountSource;
+
+            addincomebtn.Text = "Update Income"; // Change button text
+        }
+
+        // Common initialization
+        private void InitializeForm()
+        {
             label8.Text = currentUser.Email;
             label7.Text = currentUser.FullName;
 
-            // 🔹 Fix NumericUpDown for large amounts
-            amountbox.Maximum = 1000000;  // Set as needed
+            amountbox.Maximum = 1000000;
             amountbox.Minimum = 0;
-            amountbox.DecimalPlaces = 2;   // Optional, for cents
-            amountbox.Increment = 100;     // Optional, step with arrows
+            amountbox.DecimalPlaces = 2;
+            amountbox.Increment = 100;
+
+            // Populate combo boxes
+            categorycombo.Items.Clear();
+            categorycombo.Items.AddRange(new string[] { "Salary", "Freelance", "Investment", "Gift", "Other" });
+
+            soucrecombo.Items.Clear();
+            soucrecombo.Items.AddRange(new string[] { "Cash", "Bank Account", "PayPal", "Credit Card" });
         }
 
-        // 🔹 Add Income button click
+        // Add or Update button click
         private void addincomebtn_Click(object sender, EventArgs e)
         {
             try
             {
-                // Create new Income object
-                Income newIncome = new Income
+                Income income = new Income
                 {
                     UserId = currentUser.UserId,
                     Amount = amountbox.Value,
@@ -41,23 +74,35 @@ namespace FinoraTracker.Forms
                     IncomeDate = dateTimePicker1.Value,
                     Description = descrption.Text.Trim(),
                     AccountSource = soucrecombo.SelectedItem?.ToString() ?? "",
-                    CreatedAt = DateTime.Now
+                    CreatedAt = existingIncome?.CreatedAt ?? DateTime.Now
                 };
 
-                // Add to database
-                bool success = incomeController.AddIncome(newIncome);
+                bool success;
+                if (existingIncome != null)
+                {
+                    income.IncomeId = existingIncome.IncomeId;
+                    success = incomeController.UpdateIncome(income);
+                }
+                else
+                {
+                    success = incomeController.AddIncome(income);
+                }
 
                 if (success)
                 {
-                    MessageBox.Show("Income added successfully!", "Success",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(existingIncome != null ? "Income updated!" : "Income added!",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Clear form fields
-                    amountbox.Value = 0;
-                    categorycombo.SelectedIndex = -1;
-                    dateTimePicker1.Value = DateTime.Today;
-                    descrption.Clear();
-                    soucrecombo.SelectedIndex = -1;
+                    if (existingIncome == null)
+                    {
+                        amountbox.Value = 0;
+                        categorycombo.SelectedIndex = -1;
+                        dateTimePicker1.Value = DateTime.Today;
+                        descrption.Clear();
+                        soucrecombo.SelectedIndex = -1;
+                    }
+
+                    this.Close();
                 }
             }
             catch (Exception ex)
@@ -67,7 +112,7 @@ namespace FinoraTracker.Forms
             }
         }
 
-        // 🔹 Navigation buttons
+        // Navigation buttons
         private void dashboardbtn_Click(object sender, EventArgs e)
         {
             Dashboard dashboard = new Dashboard(currentUser);
@@ -99,6 +144,13 @@ namespace FinoraTracker.Forms
         private void logoutbtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            IncomeForm incomeForm = new IncomeForm(currentUser);
+            incomeForm.Show();
+            this.Hide();
         }
     }
 }
