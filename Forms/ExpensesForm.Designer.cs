@@ -1,6 +1,6 @@
 ﻿namespace FinoraTracker.Forms
 {
-    partial class Addexpenses
+    partial class Expenses
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Addexpenses));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Expenses));
             panel1 = new Panel();
             pictureBox16 = new PictureBox();
             pictureBox15 = new PictureBox();
@@ -55,19 +55,13 @@
             label7 = new Label();
             pictureBox2 = new PictureBox();
             label1 = new Label();
-            backbtn = new Button();
-            descrption1 = new RichTextBox();
-            addexpensesbtn = new Button();
-            categorycombo2 = new ComboBox();
-            paymentcombo = new ComboBox();
-            dateTimePicker2 = new DateTimePicker();
-            amountbox1 = new NumericUpDown();
-            label10 = new Label();
-            label12 = new Label();
-            label5 = new Label();
-            label9 = new Label();
+            textBox1 = new TextBox();
+            serchbox = new ComboBox();
+            searchbtn = new Button();
+            addexpensespage = new Button();
             label4 = new Label();
-            label6 = new Label();
+            datebox = new DateTimePicker();
+            dataGridExpenses = new DataGridView();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
@@ -82,7 +76,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)amountbox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridExpenses).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -107,12 +101,12 @@
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(300, 720);
-            panel1.TabIndex = 7;
+            panel1.TabIndex = 6;
             // 
             // pictureBox16
             // 
             pictureBox16.Image = (Image)resources.GetObject("pictureBox16.Image");
-            pictureBox16.Location = new Point(62, 657);
+            pictureBox16.Location = new Point(65, 663);
             pictureBox16.Name = "pictureBox16";
             pictureBox16.Size = new Size(44, 42);
             pictureBox16.SizeMode = PictureBoxSizeMode.Zoom;
@@ -239,6 +233,7 @@
             incomebtn.TabIndex = 10;
             incomebtn.Text = "Income";
             incomebtn.UseVisualStyleBackColor = true;
+            incomebtn.Click += incomebtn_Click;
             // 
             // pictureBox10
             // 
@@ -308,19 +303,20 @@
             dashboardbtn.TabIndex = 8;
             dashboardbtn.Text = "     Dashboard";
             dashboardbtn.UseVisualStyleBackColor = true;
+            dashboardbtn.Click += dashboardbtn_Click;
             // 
             // logoutbtn
             // 
             logoutbtn.FlatAppearance.BorderSize = 0;
             logoutbtn.FlatStyle = FlatStyle.Flat;
-            logoutbtn.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             logoutbtn.ForeColor = Color.BlanchedAlmond;
-            logoutbtn.Location = new Point(32, 651);
+            logoutbtn.Location = new Point(32, 660);
             logoutbtn.Name = "logoutbtn";
             logoutbtn.Size = new Size(233, 57);
             logoutbtn.TabIndex = 7;
             logoutbtn.Text = "Logout";
             logoutbtn.UseVisualStyleBackColor = true;
+            logoutbtn.Click += logoutbtn_Click;
             // 
             // panel2
             // 
@@ -334,8 +330,8 @@
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(300, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1044, 79);
-            panel2.TabIndex = 8;
+            panel2.Size = new Size(1066, 79);
+            panel2.TabIndex = 7;
             // 
             // pictureBox9
             // 
@@ -393,172 +389,105 @@
             label1.Font = new Font("Century Gothic", 14F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(18, 25);
             label1.Name = "label1";
-            label1.Size = new Size(206, 34);
+            label1.Size = new Size(303, 34);
             label1.TabIndex = 3;
-            label1.Text = "Add Expenses";
+            label1.Text = "Spending Breakdown";
             // 
-            // backbtn
+            // textBox1
             // 
-            backbtn.BackColor = SystemColors.Highlight;
-            backbtn.FlatStyle = FlatStyle.Flat;
-            backbtn.Font = new Font("Sitka Text", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            backbtn.ForeColor = Color.White;
-            backbtn.Location = new Point(333, 667);
-            backbtn.Name = "backbtn";
-            backbtn.Size = new Size(151, 41);
-            backbtn.TabIndex = 61;
-            backbtn.Text = "🡸 Back";
-            backbtn.UseVisualStyleBackColor = false;
+            textBox1.BackColor = SystemColors.Control;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Century Gothic", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            textBox1.ForeColor = Color.Red;
+            textBox1.Location = new Point(528, 182);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(551, 31);
+            textBox1.TabIndex = 58;
+            textBox1.Text = "-12,678 LKR";
             // 
-            // descrption1
+            // serchbox
             // 
-            descrption1.Location = new Point(985, 238);
-            descrption1.Name = "descrption1";
-            descrption1.Size = new Size(347, 124);
-            descrption1.TabIndex = 60;
-            descrption1.Text = "";
+            serchbox.FormattingEnabled = true;
+            serchbox.Items.AddRange(new object[] { "Salary", "Business Profits", "Freelance", "Investment", "Dividends", "Rental Income", "Gifts / Donations", "Bonus / Incentives" });
+            serchbox.Location = new Point(334, 111);
+            serchbox.Name = "serchbox";
+            serchbox.Size = new Size(401, 33);
+            serchbox.TabIndex = 57;
             // 
-            // addexpensesbtn
+            // searchbtn
             // 
-            addexpensesbtn.BackColor = Color.SeaGreen;
-            addexpensesbtn.FlatStyle = FlatStyle.Flat;
-            addexpensesbtn.Font = new Font("Sitka Text", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            addexpensesbtn.ForeColor = Color.White;
-            addexpensesbtn.Location = new Point(755, 473);
-            addexpensesbtn.Name = "addexpensesbtn";
-            addexpensesbtn.Size = new Size(224, 57);
-            addexpensesbtn.TabIndex = 59;
-            addexpensesbtn.Text = "Add Expense";
-            addexpensesbtn.UseVisualStyleBackColor = false;
-            addexpensesbtn.Click += addexpensesbtn_Click;
+            searchbtn.BackColor = SystemColors.Highlight;
+            searchbtn.FlatStyle = FlatStyle.Flat;
+            searchbtn.Font = new Font("Sitka Text", 8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            searchbtn.ForeColor = Color.White;
+            searchbtn.Location = new Point(1212, 113);
+            searchbtn.Name = "searchbtn";
+            searchbtn.Size = new Size(122, 31);
+            searchbtn.TabIndex = 56;
+            searchbtn.Text = "🔍 Search";
+            searchbtn.UseVisualStyleBackColor = false;
+            searchbtn.Click += searchbtn_Click;
             // 
-            // categorycombo2
+            // addexpensespage
             // 
-            categorycombo2.FormattingEnabled = true;
-            categorycombo2.Items.AddRange(new object[] { "Salary", "Business Profits", "Freelance", "Investments", "Dividends", "Rental Income", "Gifts / Donations", "Bonus / Incentives" });
-            categorycombo2.Location = new Point(985, 133);
-            categorycombo2.Name = "categorycombo2";
-            categorycombo2.Size = new Size(347, 33);
-            categorycombo2.TabIndex = 58;
-            // 
-            // paymentcombo
-            // 
-            paymentcombo.FormattingEnabled = true;
-            paymentcombo.Items.AddRange(new object[] { "Sampath Bank", "People's Bank", "HNB Bank", "Commercial Bank", "Credit Card", "Cash" });
-            paymentcombo.Location = new Point(490, 329);
-            paymentcombo.Name = "paymentcombo";
-            paymentcombo.Size = new Size(347, 33);
-            paymentcombo.TabIndex = 57;
-            // 
-            // dateTimePicker2
-            // 
-            dateTimePicker2.Location = new Point(490, 241);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(347, 31);
-            dateTimePicker2.TabIndex = 56;
-            // 
-            // amountbox1
-            // 
-            amountbox1.Location = new Point(490, 138);
-            amountbox1.Name = "amountbox1";
-            amountbox1.Size = new Size(347, 31);
-            amountbox1.TabIndex = 55;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.BackColor = Color.Transparent;
-            label10.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label10.ForeColor = Color.SeaGreen;
-            label10.Location = new Point(333, 334);
-            label10.Name = "label10";
-            label10.Size = new Size(150, 23);
-            label10.TabIndex = 54;
-            label10.Text = "Payment Method:";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.BackColor = Color.Transparent;
-            label12.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label12.ForeColor = Color.SeaGreen;
-            label12.Location = new Point(874, 334);
-            label12.Name = "label12";
-            label12.Size = new Size(0, 23);
-            label12.TabIndex = 53;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.Transparent;
-            label5.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label5.ForeColor = Color.SeaGreen;
-            label5.Location = new Point(333, 242);
-            label5.Name = "label5";
-            label5.Size = new Size(53, 23);
-            label5.TabIndex = 52;
-            label5.Text = "Date:";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.BackColor = Color.Transparent;
-            label9.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label9.ForeColor = Color.SeaGreen;
-            label9.Location = new Point(870, 241);
-            label9.Name = "label9";
-            label9.Size = new Size(109, 23);
-            label9.TabIndex = 51;
-            label9.Text = "Description:";
+            addexpensespage.BackColor = Color.SeaGreen;
+            addexpensespage.FlatStyle = FlatStyle.Flat;
+            addexpensespage.Font = new Font("Sitka Text", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            addexpensespage.ForeColor = Color.White;
+            addexpensespage.Location = new Point(1108, 171);
+            addexpensespage.Name = "addexpensespage";
+            addexpensespage.Size = new Size(226, 40);
+            addexpensespage.TabIndex = 55;
+            addexpensespage.Text = "Add New Expenses";
+            addexpensespage.UseVisualStyleBackColor = false;
+            addexpensespage.Click += addexpensespage_Click;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label4.ForeColor = Color.SeaGreen;
-            label4.Location = new Point(870, 137);
+            label4.Font = new Font("Century Gothic", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(334, 180);
             label4.Name = "label4";
-            label4.Size = new Size(86, 23);
-            label4.TabIndex = 50;
-            label4.Text = "Category:";
+            label4.Size = new Size(188, 26);
+            label4.TabIndex = 52;
+            label4.Text = "Expenses History";
             // 
-            // label6
+            // datebox
             // 
-            label6.AutoSize = true;
-            label6.BackColor = Color.Transparent;
-            label6.Font = new Font("Sitka Text", 8F, FontStyle.Bold);
-            label6.ForeColor = Color.SeaGreen;
-            label6.Location = new Point(333, 138);
-            label6.Name = "label6";
-            label6.Size = new Size(130, 23);
-            label6.TabIndex = 49;
-            label6.Text = "Amount (LKR):";
+            datebox.Location = new Point(775, 113);
+            datebox.Name = "datebox";
+            datebox.Size = new Size(411, 31);
+            datebox.TabIndex = 54;
             // 
-            // Addexpenses
+            // dataGridExpenses
+            // 
+            dataGridExpenses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridExpenses.Location = new Point(334, 226);
+            dataGridExpenses.Name = "dataGridExpenses";
+            dataGridExpenses.RowHeadersWidth = 62;
+            dataGridExpenses.Size = new Size(1000, 467);
+            dataGridExpenses.TabIndex = 53;
+            dataGridExpenses.CellContentClick += dataGridExpenses_CellContentClick;
+            // 
+            // Expenses
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1344, 720);
-            Controls.Add(backbtn);
-            Controls.Add(descrption1);
-            Controls.Add(addexpensesbtn);
-            Controls.Add(categorycombo2);
-            Controls.Add(paymentcombo);
-            Controls.Add(dateTimePicker2);
-            Controls.Add(amountbox1);
-            Controls.Add(label10);
-            Controls.Add(label12);
-            Controls.Add(label5);
-            Controls.Add(label9);
+            ClientSize = new Size(1366, 720);
+            Controls.Add(textBox1);
+            Controls.Add(serchbox);
+            Controls.Add(searchbtn);
+            Controls.Add(addexpensespage);
             Controls.Add(label4);
-            Controls.Add(label6);
+            Controls.Add(datebox);
+            Controls.Add(dataGridExpenses);
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Addexpenses";
+            Name = "Expenses";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Addexpenses";
+            Text = "Expenses";
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox16).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
@@ -575,7 +504,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)amountbox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridExpenses).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -608,18 +537,12 @@
         private Label label7;
         private PictureBox pictureBox2;
         private Label label1;
-        private Button backbtn;
-        private RichTextBox descrption1;
-        private Button addexpensesbtn;
-        private ComboBox categorycombo2;
-        private ComboBox paymentcombo;
-        private DateTimePicker dateTimePicker2;
-        private NumericUpDown amountbox1;
-        private Label label10;
-        private Label label12;
-        private Label label5;
-        private Label label9;
+        private TextBox textBox1;
+        private ComboBox serchbox;
+        private Button searchbtn;
+        private Button addexpensespage;
         private Label label4;
-        private Label label6;
+        private DateTimePicker datebox;
+        private DataGridView dataGridExpenses;
     }
 }
