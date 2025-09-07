@@ -256,5 +256,10 @@ namespace FinoraTracker.Forms
             reportsForm.Show();
             this.Hide();
         }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

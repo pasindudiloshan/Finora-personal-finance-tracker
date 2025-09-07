@@ -1,10 +1,12 @@
-﻿using System;
+﻿using FinoraTracker.Controllers;
+using FinoraTracker.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using FinoraTracker.Models;
-using FinoraTracker.Controllers;
+
+#nullable enable
 
 namespace FinoraTracker.Forms
 {
@@ -30,6 +32,9 @@ namespace FinoraTracker.Forms
 
             allIncomes = incomeController.GetIncomeByUser(currentUser.UserId);
             allExpenses = expenseController.GetExpensesByUser(currentUser.UserId);
+
+            // Ensure button is wired
+            datefilterbtn.Click += Datefilterbtn_Click;
 
             LoadDefaultReports();
         }
@@ -67,37 +72,43 @@ namespace FinoraTracker.Forms
         // -------------------- Default Load --------------------
         private void LoadDefaultReports()
         {
-            DateTime start = DateTime.Now.AddDays(-30);
-            DateTime end = DateTime.Now;
+            DateTime start = DateTime.Now.AddDays(-30).Date;
+            DateTime end = DateTime.Now.Date.AddDays(1).AddTicks(-1);
 
-            var filteredIncomes = allIncomes
-                .Where(i => i.IncomeDate.Date >= start && i.IncomeDate.Date <= end)
-                .ToList();
-
-            var filteredExpenses = allExpenses
-                .Where(e => e.ExpenseDate.Date >= start && e.ExpenseDate.Date <= end)
-                .ToList();
-
-            UpdateCharts(filteredIncomes, filteredExpenses);
-            UpdateDataGrids(filteredIncomes, filteredExpenses);
+            FilterAndUpdateReports(start, end);
         }
 
-        // -------------------- Filter Button --------------------
-        private void button1_Click(object sender, EventArgs e)
+        // -------------------- Date Filter --------------------
+        private void Datefilterbtn_Click(object? sender, EventArgs e)
         {
             DateTime start = dateTimePicker1.Value.Date;
-            DateTime end = dateTimePicker3.Value.Date;
+            DateTime end = dateTimePicker3.Value.Date.AddDays(1).AddTicks(-1);
 
+            if (start > end)
+            {
+                MessageBox.Show("Start date cannot be after End date.", "Invalid Date Range", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            FilterAndUpdateReports(start, end);
+        }
+
+        // -------------------- Filter & Update --------------------
+        private void FilterAndUpdateReports(DateTime start, DateTime end)
+        {
+            // Filter incomes & expenses
             var filteredIncomes = allIncomes
-                .Where(i => i.IncomeDate.Date >= start && i.IncomeDate.Date <= end)
+                .Where(i => i.IncomeDate >= start && i.IncomeDate <= end)
                 .ToList();
 
             var filteredExpenses = allExpenses
-                .Where(e => e.ExpenseDate.Date >= start && e.ExpenseDate.Date <= end)
+                .Where(e => e.ExpenseDate >= start && e.ExpenseDate <= end)
                 .ToList();
 
+            // Update charts, grids, stats
             UpdateCharts(filteredIncomes, filteredExpenses);
             UpdateDataGrids(filteredIncomes, filteredExpenses);
+            LoadStatCards(filteredIncomes, filteredExpenses);
         }
 
         // -------------------- Update Charts --------------------
@@ -108,12 +119,10 @@ namespace FinoraTracker.Forms
             chart1.ChartAreas.Clear();
             chart1.Legends.Clear();
 
-
             ChartArea chartArea = new ChartArea("ChartArea1");
             chart1.ChartAreas.Add(chartArea);
 
-            Legend legend = new Legend("Legend1");
-            legend.Docking = Docking.Top;
+            Legend legend = new Legend("Legend1") { Docking = Docking.Top };
             chart1.Legends.Add(legend);
 
             Series incomeSeries = new Series("Income")
@@ -139,7 +148,7 @@ namespace FinoraTracker.Forms
             foreach (var date in dates)
             {
                 decimal incomeSum = incomes.Where(i => i.IncomeDate.Date == date).Sum(i => i.Amount);
-                decimal expenseSum = expenses.Where(e => e.ExpenseDate.Date == date).Sum(i => i.Amount);
+                decimal expenseSum = expenses.Where(e => e.ExpenseDate.Date == date).Sum(e => e.Amount);
 
                 incomeSeries.Points.AddXY(date, (double)incomeSum);
                 expenseSeries.Points.AddXY(date, (double)expenseSum);
@@ -227,7 +236,7 @@ namespace FinoraTracker.Forms
                 dgv.RowTemplate.Height = 35;
             }
 
-            // -------- Income Grid --------
+            // Income Grid
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
             dataGridView1.AutoGenerateColumns = false;
@@ -256,7 +265,7 @@ namespace FinoraTracker.Forms
             StyleDataGrid(dataGridView1);
             dataGridView1.AutoResizeColumns();
 
-            // -------- Expense Grid --------
+            // Expense Grid
             dataGridView2.Columns.Clear();
             dataGridView2.Rows.Clear();
             dataGridView2.AutoGenerateColumns = false;
@@ -285,5 +294,84 @@ namespace FinoraTracker.Forms
             StyleDataGrid(dataGridView2);
             dataGridView2.AutoResizeColumns();
         }
+
+        // -------------------- Stat Cards --------------------
+        private string FormatAmount(decimal amount)
+        {
+            if (amount >= 1_000_000)
+                return $"{amount / 1_000_000:F1}M LKR";
+            else if (amount >= 1_000)
+                return $"{amount / 1_000:F0}K LKR";
+            else
+                return $"{amount:N0} LKR";
+        }
+
+        private void SetChangeLabel(Label label, decimal change)
+        {
+            if (change >= 0)
+            {
+                label.BackColor = System.Drawing.Color.SeaGreen;
+                label.Text = $"⬆ {change:F1}%";
+            }
+            else
+            {
+                label.BackColor = System.Drawing.Color.Red;
+                label.Text = $"⬇ {Math.Abs(change):F1}%";
+            }
+        }
+
+        private void LoadStatCards(List<Income> incomes, List<Expense> expenses)
+        {
+            decimal totalIncome = incomes.Sum(i => i.Amount);
+            decimal totalExpenses = expenses.Sum(e => e.Amount);
+            decimal netWealth = totalIncome - totalExpenses;
+
+            label6.Text = FormatAmount(netWealth);
+            label6.ForeColor = netWealth >= 0 ? System.Drawing.Color.Green : System.Drawing.Color.Red;
+
+            if (incomes.Count > 0 || expenses.Count > 0)
+            {
+                DateTime startDate = incomes.Concat<Income>(expenses.Select(e => new Income { IncomeDate = e.ExpenseDate, Amount = 0 })).Min(i => i.IncomeDate);
+                DateTime endDate = incomes.Concat<Income>(expenses.Select(e => new Income { IncomeDate = e.ExpenseDate, Amount = 0 })).Max(i => i.IncomeDate);
+
+                int days = (endDate - startDate).Days + 1;
+                DateTime prevStart = startDate.AddDays(-days);
+                DateTime prevEnd = startDate.AddDays(-1);
+
+                decimal prevIncome = allIncomes.Where(i => i.IncomeDate >= prevStart && i.IncomeDate <= prevEnd).Sum(i => i.Amount);
+                decimal prevExpenses = allExpenses.Where(e => e.ExpenseDate >= prevStart && e.ExpenseDate <= prevEnd).Sum(e => e.Amount);
+                decimal prevNetWealth = prevIncome - prevExpenses;
+
+                decimal growthPercent = prevNetWealth == 0 ? 100 : ((netWealth - prevNetWealth) / prevNetWealth) * 100;
+                SetChangeLabel(label9, growthPercent);
+            }
+            else
+            {
+                label9.Text = "No data";
+                label9.BackColor = System.Drawing.Color.Gray;
+            }
+
+            label14.Text = FormatAmount(totalIncome);
+            label14.ForeColor = System.Drawing.Color.Green;
+
+            label10.Text = FormatAmount(totalExpenses);
+            label10.ForeColor = System.Drawing.Color.Red;
+
+            UpdateTargetAchievement(totalIncome, 5_000_000M);
+        }
+
+        private void UpdateTargetAchievement(decimal totalIncome, decimal targetAmount)
+        {
+            decimal remaining = targetAmount - totalIncome;
+
+            if (remaining <= 0)
+                label16.Text = $"Target Achieved! ({FormatAmount(totalIncome)})";
+            else
+                label16.Text = $"{FormatAmount(remaining)}";
+
+            label16.ForeColor = System.Drawing.Color.OrangeRed;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e) { }
     }
 }

@@ -251,6 +251,7 @@
             label14.Size = new Size(133, 34);
             label14.TabIndex = 10;
             label14.Text = "5.5M LKR";
+            label14.Click += label14_Click;
             // 
             // label13
             // 
