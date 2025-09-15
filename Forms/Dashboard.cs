@@ -257,9 +257,18 @@ namespace FinoraTracker.Forms
             this.Hide();
         }
 
-        private void label14_Click(object sender, EventArgs e)
+        private void portfoliobtn_Click(object sender, EventArgs e)
         {
+            Portfolios portfolioForm = new Portfolios(currentUser);
+            portfolioForm.Show();
+            this.Hide();
+        }
 
+        private void investmentbtn_Click(object sender, EventArgs e)
+        {
+            Investments InvestmentsForm = new Investments(currentUser);
+            InvestmentsForm.Show();
+            this.Hide();
         }
     }
 }

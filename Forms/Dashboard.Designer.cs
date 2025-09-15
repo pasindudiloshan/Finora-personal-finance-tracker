@@ -99,6 +99,7 @@
             pictureBox11 = new PictureBox();
             incomebtn = new Button();
             dashboardbtn = new Button();
+            pictureBox17 = new PictureBox();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
@@ -128,6 +129,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
             SuspendLayout();
             // 
             // welcomeLabel
@@ -154,6 +156,7 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.ControlLightLight;
+            panel2.Controls.Add(pictureBox17);
             panel2.Controls.Add(pictureBox9);
             panel2.Controls.Add(pictureBox8);
             panel2.Controls.Add(label8);
@@ -251,7 +254,6 @@
             label14.Size = new Size(133, 34);
             label14.TabIndex = 10;
             label14.Text = "5.5M LKR";
-            label14.Click += label14_Click;
             // 
             // label13
             // 
@@ -778,6 +780,7 @@
             portfoliobtn.TabIndex = 18;
             portfoliobtn.Text = "Portfolio";
             portfoliobtn.UseVisualStyleBackColor = false;
+            portfoliobtn.Click += portfoliobtn_Click;
             // 
             // pictureBox14
             // 
@@ -827,6 +830,7 @@
             investmentbtn.TabIndex = 14;
             investmentbtn.Text = "       Investments";
             investmentbtn.UseVisualStyleBackColor = true;
+            investmentbtn.Click += investmentbtn_Click;
             // 
             // pictureBox12
             // 
@@ -893,6 +897,16 @@
             dashboardbtn.UseVisualStyleBackColor = true;
             dashboardbtn.Click += dashboardbtn_Click;
             // 
+            // pictureBox17
+            // 
+            pictureBox17.Image = Properties.Resources.search;
+            pictureBox17.Location = new Point(665, 30);
+            pictureBox17.Name = "pictureBox17";
+            pictureBox17.Size = new Size(35, 34);
+            pictureBox17.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox17.TabIndex = 9;
+            pictureBox17.TabStop = false;
+            // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -951,6 +965,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).EndInit();
             ResumeLayout(false);
         }
 
@@ -1020,5 +1035,6 @@
         private Button dashboardbtn;
         private Label label26;
         private Label label27;
+        private PictureBox pictureBox17;
     }
 }
