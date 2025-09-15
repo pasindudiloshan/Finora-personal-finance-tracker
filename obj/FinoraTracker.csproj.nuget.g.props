@@ -13,4 +13,9 @@
     <SourceRoot Include="C:\Users\Hp\.nuget\packages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)chromiumembeddedframework.runtime.win-x86\139.0.28\buildTransitive\chromiumembeddedframework.runtime.win-x86.props" Condition="Exists('$(NuGetPackageRoot)chromiumembeddedframework.runtime.win-x86\139.0.28\buildTransitive\chromiumembeddedframework.runtime.win-x86.props')" />
+    <Import Project="$(NuGetPackageRoot)chromiumembeddedframework.runtime.win-x64\139.0.28\buildTransitive\chromiumembeddedframework.runtime.win-x64.props" Condition="Exists('$(NuGetPackageRoot)chromiumembeddedframework.runtime.win-x64\139.0.28\buildTransitive\chromiumembeddedframework.runtime.win-x64.props')" />
+    <Import Project="$(NuGetPackageRoot)cefsharp.common\139.0.280\buildTransitive\CefSharp.Common.props" Condition="Exists('$(NuGetPackageRoot)cefsharp.common\139.0.280\buildTransitive\CefSharp.Common.props')" />
+  </ImportGroup>
 </Project>
