@@ -42,4 +42,4 @@ C:\Users\Hp\Desktop\FinoraTracker\bin\Debug\net9.0-windows7.0\BCrypt.Net-Next.dl
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.IncomeForm.resources
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Reports.resources
 C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Portfolios.resources
-C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Investments.resources
+C:\Users\Hp\Desktop\FinoraTracker\obj\Debug\net9.0-windows7.0\FinoraTracker.Forms.Finorabot.resources

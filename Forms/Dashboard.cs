@@ -264,11 +264,10 @@ namespace FinoraTracker.Forms
             this.Hide();
         }
 
-        private void investmentbtn_Click(object sender, EventArgs e)
+        private void pictureBox17_Click(object sender, EventArgs e)
         {
-            Investments InvestmentsForm = new Investments(currentUser);
-            InvestmentsForm.Show();
-            this.Hide();
+            Finorabot bot = new Finorabot(currentUser);
+            bot.Show();
         }
     }
 }

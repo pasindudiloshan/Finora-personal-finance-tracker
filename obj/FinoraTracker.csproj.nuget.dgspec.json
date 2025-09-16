@@ -55,10 +55,6 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
-            "CefSharp.WinForms": {
-              "target": "Package",
-              "version": "[139.0.280, )"
-            },
             "MySql.Data": {
               "target": "Package",
               "version": "[9.4.0, )"

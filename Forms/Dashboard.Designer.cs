@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             welcomeLabel = new Label();
             label1 = new Label();
             panel2 = new Panel();
+            pictureBox17 = new PictureBox();
             pictureBox9 = new PictureBox();
             pictureBox8 = new PictureBox();
             label8 = new Label();
@@ -99,8 +100,8 @@
             pictureBox11 = new PictureBox();
             incomebtn = new Button();
             dashboardbtn = new Button();
-            pictureBox17 = new PictureBox();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -129,7 +130,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
             SuspendLayout();
             // 
             // welcomeLabel
@@ -169,6 +169,17 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1066, 79);
             panel2.TabIndex = 5;
+            // 
+            // pictureBox17
+            // 
+            pictureBox17.Image = (Image)resources.GetObject("pictureBox17.Image");
+            pictureBox17.Location = new Point(665, 30);
+            pictureBox17.Name = "pictureBox17";
+            pictureBox17.Size = new Size(35, 34);
+            pictureBox17.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox17.TabIndex = 9;
+            pictureBox17.TabStop = false;
+            pictureBox17.Click += pictureBox17_Click;
             // 
             // pictureBox9
             // 
@@ -830,7 +841,6 @@
             investmentbtn.TabIndex = 14;
             investmentbtn.Text = "       Investments";
             investmentbtn.UseVisualStyleBackColor = true;
-            investmentbtn.Click += investmentbtn_Click;
             // 
             // pictureBox12
             // 
@@ -897,16 +907,6 @@
             dashboardbtn.UseVisualStyleBackColor = true;
             dashboardbtn.Click += dashboardbtn_Click;
             // 
-            // pictureBox17
-            // 
-            pictureBox17.Image = Properties.Resources.search;
-            pictureBox17.Location = new Point(665, 30);
-            pictureBox17.Name = "pictureBox17";
-            pictureBox17.Size = new Size(35, 34);
-            pictureBox17.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox17.TabIndex = 9;
-            pictureBox17.TabStop = false;
-            // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(11F, 22F);
@@ -928,6 +928,7 @@
             Text = "Dashboard";
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -965,7 +966,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox17).EndInit();
             ResumeLayout(false);
         }
 
