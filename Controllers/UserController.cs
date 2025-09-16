@@ -6,7 +6,14 @@ namespace FinoraTracker.Controllers
 {
     public class UserController
     {
-        private UserDAO userDAO = new UserDAO();
+        private readonly UserDAO userDAO;
+
+        public UserController()
+        {
+            var connectionProvider = new DefaultDBConnectionProvider();
+            var commandFactory = new DefaultCommandFactory();
+            userDAO = new UserDAO(connectionProvider, commandFactory);
+        }
 
         public bool Register(User user)
         {

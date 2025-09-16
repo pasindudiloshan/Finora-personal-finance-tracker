@@ -6,15 +6,35 @@ using BCrypt.Net;
 
 namespace FinoraTracker.DAOs
 {
+    // Interface for DB connection provider
+    public interface IDBConnectionProvider
+    {
+        MySqlConnection GetConnection();
+    }
+
+    // Interface for creating commands (so we can mock them in tests)
+    public interface ICommandFactory
+    {
+        MySqlCommand CreateCommand(string query, MySqlConnection connection);
+    }
+
     public class UserDAO
     {
+        private readonly IDBConnectionProvider _connectionProvider;
+        private readonly ICommandFactory _commandFactory;
+
+        public UserDAO(IDBConnectionProvider connectionProvider, ICommandFactory commandFactory)
+        {
+            _connectionProvider = connectionProvider;
+            _commandFactory = commandFactory;
+        }
+
         public bool RegisterUser(User user)
         {
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
                 // Check duplicate email
-                string checkQuery = "SELECT COUNT(*) FROM Users WHERE Email=@Email";
-                MySqlCommand checkCmd = new MySqlCommand(checkQuery, conn);
+                var checkCmd = _commandFactory.CreateCommand("SELECT COUNT(*) FROM Users WHERE Email=@Email", conn);
                 checkCmd.Parameters.AddWithValue("@Email", user.Email);
                 int count = Convert.ToInt32(checkCmd.ExecuteScalar());
                 if (count > 0)
@@ -23,13 +43,14 @@ namespace FinoraTracker.DAOs
                 // Hash password
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
-                string query = @"INSERT INTO Users 
-                                 (FullName, PhoneNumber, Email, Gender, Occupation, 
-                                  IncomeFrequency, InvestmentInterest, HowDidYouKnow, Password)
-                                 VALUES 
-                                 (@FullName, @PhoneNumber, @Email, @Gender, @Occupation, 
-                                  @IncomeFrequency, @InvestmentInterest, @HowDidYouKnow, @Password)";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                var query = @"INSERT INTO Users 
+                              (FullName, PhoneNumber, Email, Gender, Occupation, 
+                               IncomeFrequency, InvestmentInterest, HowDidYouKnow, Password)
+                              VALUES 
+                              (@FullName, @PhoneNumber, @Email, @Gender, @Occupation, 
+                               @IncomeFrequency, @InvestmentInterest, @HowDidYouKnow, @Password)";
+
+                var cmd = _commandFactory.CreateCommand(query, conn);
                 cmd.Parameters.AddWithValue("@FullName", user.FullName);
                 cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber);
                 cmd.Parameters.AddWithValue("@Email", user.Email);
@@ -40,20 +61,18 @@ namespace FinoraTracker.DAOs
                 cmd.Parameters.AddWithValue("@HowDidYouKnow", user.HowDidYouKnow);
                 cmd.Parameters.AddWithValue("@Password", hashedPassword);
 
-                int result = cmd.ExecuteNonQuery();
-                return result > 0;
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
 
         public User? Login(string email, string password)
         {
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
-                string query = "SELECT * FROM Users WHERE Email=@Email";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                var cmd = _commandFactory.CreateCommand("SELECT * FROM Users WHERE Email=@Email", conn);
                 cmd.Parameters.AddWithValue("@Email", email);
 
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
                     {
@@ -78,5 +97,18 @@ namespace FinoraTracker.DAOs
             }
             return null;
         }
+    }
+
+    // Default DB connection provider
+    public class DefaultDBConnectionProvider : IDBConnectionProvider
+    {
+        public MySqlConnection GetConnection() => DBConnection.GetConnection();
+    }
+
+    // Default command factory
+    public class DefaultCommandFactory : ICommandFactory
+    {
+        public MySqlCommand CreateCommand(string query, MySqlConnection connection) =>
+            new MySqlCommand(query, connection);
     }
 }
