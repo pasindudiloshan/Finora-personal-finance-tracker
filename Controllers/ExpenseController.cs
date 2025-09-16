@@ -12,10 +12,11 @@ namespace FinoraTracker.Controllers
 
         public ExpenseController()
         {
-            expenseDAO = new ExpenseDAO();
+            var connectionProvider = new DefaultDBConnectionProvider();
+            var commandFactory = new DefaultCommandFactory();
+            expenseDAO = new ExpenseDAO(connectionProvider, commandFactory);
         }
 
-        // 🔹 Add new expense
         public bool AddExpense(Expense expense)
         {
             if (expense.Amount <= 0)
@@ -30,7 +31,6 @@ namespace FinoraTracker.Controllers
             return expenseDAO.AddExpense(expense);
         }
 
-        // 🔹 Get all expenses by user
         public List<Expense> GetExpensesByUser(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
@@ -38,7 +38,6 @@ namespace FinoraTracker.Controllers
             return expenseDAO.GetExpensesByUser(userId);
         }
 
-        // 🔹 Delete expense
         public bool DeleteExpense(int expenseId)
         {
             if (expenseId <= 0)
@@ -46,7 +45,6 @@ namespace FinoraTracker.Controllers
             return expenseDAO.DeleteExpense(expenseId);
         }
 
-        // 🔹 Update expense
         public bool UpdateExpense(Expense expense)
         {
             if (expense.ExpenseId <= 0)
@@ -63,14 +61,12 @@ namespace FinoraTracker.Controllers
             return expenseDAO.UpdateExpense(expense);
         }
 
-        // 🔹 Get last N days expenses
         public List<Expense> GetRecentExpenses(string userId, int days = 30)
         {
             var expenses = GetExpensesByUser(userId);
             return expenses.Where(e => e.ExpenseDate >= DateTime.Now.AddDays(-days)).ToList();
         }
 
-        // 🔹 Chart: Total expenses by category
         public Dictionary<string, decimal> GetExpensesByCategory(string userId, int days = 30)
         {
             var expenses = GetRecentExpenses(userId, days);
@@ -79,7 +75,6 @@ namespace FinoraTracker.Controllers
                 .ToDictionary(g => g.Key, g => g.Sum(e => e.Amount));
         }
 
-        // 🔹 Chart: Total expenses by payment method
         public Dictionary<string, decimal> GetExpensesByPaymentMethod(string userId, int days = 30)
         {
             var expenses = GetRecentExpenses(userId, days);

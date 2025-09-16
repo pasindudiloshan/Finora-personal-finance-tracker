@@ -8,15 +8,24 @@ namespace FinoraTracker.DAOs
 {
     public class ExpenseDAO
     {
+        private readonly IDBConnectionProvider _connectionProvider;
+        private readonly ICommandFactory _commandFactory;
+
+        public ExpenseDAO(IDBConnectionProvider connectionProvider, ICommandFactory commandFactory)
+        {
+            _connectionProvider = connectionProvider;
+            _commandFactory = commandFactory;
+        }
+
         // 🔹 Add a new expense record
         public bool AddExpense(Expense expense)
         {
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
-                string query = @"INSERT INTO Expenses
+                var query = @"INSERT INTO Expenses
                                 (UserId, Amount, Category, ExpenseDate, Description, PaymentMethod, CreatedAt)
                                 VALUES (@UserId, @Amount, @Category, @ExpenseDate, @Description, @PaymentMethod, @CreatedAt)";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = _commandFactory.CreateCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@UserId", expense.UserId);
                     cmd.Parameters.AddWithValue("@Amount", expense.Amount);
@@ -35,27 +44,17 @@ namespace FinoraTracker.DAOs
         public List<Expense> GetExpensesByUser(string userId)
         {
             List<Expense> expenses = new List<Expense>();
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
-                string query = "SELECT * FROM Expenses WHERE UserId = @UserId ORDER BY ExpenseDate DESC";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = "SELECT * FROM Expenses WHERE UserId = @UserId ORDER BY ExpenseDate DESC";
+                using (var cmd = _commandFactory.CreateCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@UserId", userId);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            expenses.Add(new Expense
-                            {
-                                ExpenseId = reader.GetInt32("ExpenseId"),
-                                UserId = reader.GetString("UserId"),
-                                Amount = reader.GetDecimal("Amount"),
-                                Category = reader.GetString("Category"),
-                                ExpenseDate = reader.GetDateTime("ExpenseDate"),
-                                Description = reader["Description"] != DBNull.Value ? reader.GetString("Description") : "",
-                                PaymentMethod = reader["PaymentMethod"] != DBNull.Value ? reader.GetString("PaymentMethod") : "",
-                                CreatedAt = reader.GetDateTime("CreatedAt")
-                            });
+                            expenses.Add(MapReaderToExpense(reader));
                         }
                     }
                 }
@@ -67,29 +66,19 @@ namespace FinoraTracker.DAOs
         public List<Expense> GetExpensesByUserLast30Days(string userId)
         {
             List<Expense> expenses = new List<Expense>();
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
-                string query = @"SELECT * FROM Expenses 
-                                 WHERE UserId = @UserId AND ExpenseDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-                                 ORDER BY ExpenseDate ASC";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = @"SELECT * FROM Expenses 
+                              WHERE UserId = @UserId AND ExpenseDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+                              ORDER BY ExpenseDate ASC";
+                using (var cmd = _commandFactory.CreateCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@UserId", userId);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            expenses.Add(new Expense
-                            {
-                                ExpenseId = reader.GetInt32("ExpenseId"),
-                                UserId = reader.GetString("UserId"),
-                                Amount = reader.GetDecimal("Amount"),
-                                Category = reader.GetString("Category"),
-                                ExpenseDate = reader.GetDateTime("ExpenseDate"),
-                                Description = reader["Description"] != DBNull.Value ? reader.GetString("Description") : "",
-                                PaymentMethod = reader["PaymentMethod"] != DBNull.Value ? reader.GetString("PaymentMethod") : "",
-                                CreatedAt = reader.GetDateTime("CreatedAt")
-                            });
+                            expenses.Add(MapReaderToExpense(reader));
                         }
                     }
                 }
@@ -100,10 +89,10 @@ namespace FinoraTracker.DAOs
         // 🔹 Delete an expense by ID
         public bool DeleteExpense(int expenseId)
         {
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
-                string query = "DELETE FROM Expenses WHERE ExpenseId = @ExpenseId";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = "DELETE FROM Expenses WHERE ExpenseId = @ExpenseId";
+                using (var cmd = _commandFactory.CreateCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@ExpenseId", expenseId);
                     return cmd.ExecuteNonQuery() > 0;
@@ -114,16 +103,16 @@ namespace FinoraTracker.DAOs
         // 🔹 Update an existing expense
         public bool UpdateExpense(Expense expense)
         {
-            using (MySqlConnection conn = DBConnection.GetConnection())
+            using (var conn = _connectionProvider.GetConnection())
             {
-                string query = @"UPDATE Expenses SET
-                                 Amount = @Amount,
-                                 Category = @Category,
-                                 ExpenseDate = @ExpenseDate,
-                                 Description = @Description,
-                                 PaymentMethod = @PaymentMethod
-                                 WHERE ExpenseId = @ExpenseId";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = @"UPDATE Expenses SET
+                                Amount = @Amount,
+                                Category = @Category,
+                                ExpenseDate = @ExpenseDate,
+                                Description = @Description,
+                                PaymentMethod = @PaymentMethod
+                              WHERE ExpenseId = @ExpenseId";
+                using (var cmd = _commandFactory.CreateCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Amount", expense.Amount);
                     cmd.Parameters.AddWithValue("@Category", expense.Category);
@@ -135,6 +124,22 @@ namespace FinoraTracker.DAOs
                     return cmd.ExecuteNonQuery() > 0;
                 }
             }
+        }
+
+        // 🔹 Helper: Map MySqlDataReader row to Expense object
+        private Expense MapReaderToExpense(MySqlDataReader reader)
+        {
+            return new Expense
+            {
+                ExpenseId = reader.GetInt32("ExpenseId"),
+                UserId = reader.GetString("UserId"),
+                Amount = reader.GetDecimal("Amount"),
+                Category = reader.GetString("Category"),
+                ExpenseDate = reader.GetDateTime("ExpenseDate"),
+                Description = reader["Description"] != DBNull.Value ? reader.GetString("Description") : "",
+                PaymentMethod = reader["PaymentMethod"] != DBNull.Value ? reader.GetString("PaymentMethod") : "",
+                CreatedAt = reader.GetDateTime("CreatedAt")
+            };
         }
     }
 }
