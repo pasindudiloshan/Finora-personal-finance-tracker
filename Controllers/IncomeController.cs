@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FinoraTracker.Models;
-using FinoraTracker.DAOs;
+using FinoraTracker.DAOs; // Use DAO namespace
+using MySql.Data.MySqlClient;
 
 namespace FinoraTracker.Controllers
 {
@@ -10,9 +11,15 @@ namespace FinoraTracker.Controllers
     {
         private readonly IncomeDAO incomeDAO;
 
+        // 🔹 Default constructor for Forms / legacy code
         public IncomeController()
+            : this(new DBConnectionProvider(), new CommandFactory())
+        { }
+
+        // 🔹 Constructor with DI for unit tests
+        public IncomeController(IDBConnectionProvider connectionProvider, ICommandFactory commandFactory)
         {
-            incomeDAO = new IncomeDAO();
+            incomeDAO = new IncomeDAO(connectionProvider, commandFactory);
         }
 
         // 🔹 Add new income
